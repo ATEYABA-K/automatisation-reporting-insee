@@ -1,0 +1,37 @@
+name: Rafraîchir les données Insee
+
+on:
+  schedule:
+    # Le 1er de chaque mois à 6h UTC — l'Insee publie cette enquête annuellement,
+    # ce rythme sert surtout à détecter une mise à jour ou une correction du fichier source.
+    - cron: "0 6 1 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Exécuter le pipeline
+        run: python scripts/refresh_pipeline.py
+
+      - name: Committer les changements s'il y en a
+        run: |
+          git config user.name "Alvin Kouadio"
+          git config user.email "327906160+ATEYABA-K@users.noreply.github.com"
+          git add data/ chart_ia_par_taille_2025.png chart_evolution_ia_2023_2025.png
+          git diff --cached --quiet && echo "Aucun changement détecté." || git commit -m "Rafraîchissement automatique des données Insee"
+          git push
