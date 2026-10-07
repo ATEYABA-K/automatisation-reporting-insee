@@ -18,7 +18,7 @@ python3 scripts/refresh_pipeline.py
 ```
 
 ## Le point sur lequel j'ai fait attention
-Un script qui échoue en silence, ou qui produit un résultat faux sans prévenir, est plus dangereux qu'un script qui ne marche pas du tout — personne ne s'en rendrait compte. J'ai donc fait en sorte que le script vérifie le nombre de lignes attendu (78) avant d'enregistrer le résultat. Si ce nombre ne correspond pas, le script s'arrête tout seul plutôt que de laisser passer un fichier faux.
+Un script qui échoue en silence, ou qui produit un résultat faux sans prévenir, est plus dangereux qu'un script qui ne marche pas du tout : personne ne s'en rendrait compte. J'ai donc fait en sorte que le script vérifie le nombre de lignes attendu (78) avant d'enregistrer le résultat. Si ce nombre ne correspond pas, le script s'arrête tout seul plutôt que de laisser passer un fichier faux.
 
 ## Ce que je ferais en plus
 Une notification (email) en cas d'échec, pour ne pas avoir à vérifier moi-même que tout s'est bien passé.
